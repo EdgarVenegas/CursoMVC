@@ -21,6 +21,7 @@ namespace CapaDatos.EntityFramework
         }
     
         public int IdProducto { get; set; }
+        public int IdProveedor { get; set; }
         public string Nombre { get; set; }
         public string Categoria { get; set; }
         public Nullable<decimal> Precio { get; set; }
@@ -30,6 +31,7 @@ namespace CapaDatos.EntityFramework
         public Nullable<int> IdUsuarioModifico { get; set; }
         public Nullable<System.DateTime> FechaModifico { get; set; }
     
+        public virtual Proveedor Proveedor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RemisionDetalle> RemisionDetalle { get; set; }
     }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CursoMVCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CursoMVCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="IdCliente" />
@@ -56,6 +56,7 @@
             <PropertyRef Name="IdProducto" />
           </Key>
           <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProveedor" Type="int" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="32" />
           <Property Name="Categoria" Type="nvarchar" MaxLength="32" />
           <Property Name="Precio" Type="decimal" Precision="18" Scale="4" />
@@ -135,7 +136,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Envios__IdRemisi__36B12243">
+        <Association Name="FK__Envios__IdRemisi__37A5467C">
           <End Role="Remision" Type="Self.Remision" Multiplicity="1" />
           <End Role="Envios" Type="Self.Envios" Multiplicity="*" />
           <ReferentialConstraint>
@@ -147,7 +148,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Remision__IdClie__300424B4">
+        <Association Name="FK__Producto__IdProv__2E1BDC42">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Remision__IdClie__30F848ED">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
           <End Role="Remision" Type="Self.Remision" Multiplicity="*" />
           <ReferentialConstraint>
@@ -159,7 +172,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RemisionD__IdPro__33D4B598">
+        <Association Name="FK__RemisionD__IdPro__34C8D9D1">
           <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
           <End Role="RemisionDetalle" Type="Self.RemisionDetalle" Multiplicity="*" />
           <ReferentialConstraint>
@@ -171,7 +184,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RemisionD__IdRem__32E0915F">
+        <Association Name="FK__RemisionD__IdRem__33D4B598">
           <End Role="Remision" Type="Self.Remision" Multiplicity="1" />
           <End Role="RemisionDetalle" Type="Self.RemisionDetalle" Multiplicity="*" />
           <ReferentialConstraint>
@@ -208,19 +221,23 @@
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
-          <AssociationSet Name="FK__Envios__IdRemisi__36B12243" Association="Self.FK__Envios__IdRemisi__36B12243">
+          <AssociationSet Name="FK__Envios__IdRemisi__37A5467C" Association="Self.FK__Envios__IdRemisi__37A5467C">
             <End Role="Remision" EntitySet="Remision" />
             <End Role="Envios" EntitySet="Envios" />
           </AssociationSet>
-          <AssociationSet Name="FK__Remision__IdClie__300424B4" Association="Self.FK__Remision__IdClie__300424B4">
+          <AssociationSet Name="FK__Producto__IdProv__2E1BDC42" Association="Self.FK__Producto__IdProv__2E1BDC42">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Remision__IdClie__30F848ED" Association="Self.FK__Remision__IdClie__30F848ED">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="Remision" EntitySet="Remision" />
           </AssociationSet>
-          <AssociationSet Name="FK__RemisionD__IdPro__33D4B598" Association="Self.FK__RemisionD__IdPro__33D4B598">
+          <AssociationSet Name="FK__RemisionD__IdPro__34C8D9D1" Association="Self.FK__RemisionD__IdPro__34C8D9D1">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
           </AssociationSet>
-          <AssociationSet Name="FK__RemisionD__IdRem__32E0915F" Association="Self.FK__RemisionD__IdRem__32E0915F">
+          <AssociationSet Name="FK__RemisionD__IdRem__33D4B598" Association="Self.FK__RemisionD__IdRem__33D4B598">
             <End Role="Remision" EntitySet="Remision" />
             <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
           </AssociationSet>
@@ -229,11 +246,48 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CursoMVCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CursoMVCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cliente" EntityType="CursoMVCModel.Cliente" />
+          <EntitySet Name="Envios" EntityType="CursoMVCModel.Envios" />
+          <EntitySet Name="Persona" EntityType="CursoMVCModel.Persona" />
+          <EntitySet Name="Producto" EntityType="CursoMVCModel.Producto" />
+          <EntitySet Name="Proveedor" EntityType="CursoMVCModel.Proveedor" />
+          <EntitySet Name="Remision" EntityType="CursoMVCModel.Remision" />
+          <EntitySet Name="RemisionDetalle" EntityType="CursoMVCModel.RemisionDetalle" />
+          <EntitySet Name="Usuario" EntityType="CursoMVCModel.Usuario" />
+          <AssociationSet Name="FK__Cliente__IdPerso__29572725" Association="CursoMVCModel.FK__Cliente__IdPerso__29572725">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Remision__IdClie__30F848ED" Association="CursoMVCModel.FK__Remision__IdClie__30F848ED">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Remision" EntitySet="Remision" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Envios__IdRemisi__37A5467C" Association="CursoMVCModel.FK__Envios__IdRemisi__37A5467C">
+            <End Role="Remision" EntitySet="Remision" />
+            <End Role="Envios" EntitySet="Envios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__IdPerso__267ABA7A" Association="CursoMVCModel.FK__Usuario__IdPerso__267ABA7A">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdProv__2E1BDC42" Association="CursoMVCModel.FK__Producto__IdProv__2E1BDC42">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RemisionD__IdPro__34C8D9D1" Association="CursoMVCModel.FK__RemisionD__IdPro__34C8D9D1">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RemisionD__IdRem__33D4B598" Association="CursoMVCModel.FK__RemisionD__IdRem__33D4B598">
+            <End Role="Remision" EntitySet="Remision" />
+            <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="IdCliente" />
@@ -250,8 +304,8 @@
           <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Persona" Relationship="Self.FK__Cliente__IdPerso__29572725" FromRole="Cliente" ToRole="Persona" />
-          <NavigationProperty Name="Remision" Relationship="Self.FK__Remision__IdClie__300424B4" FromRole="Cliente" ToRole="Remision" />
+          <NavigationProperty Name="Persona" Relationship="CursoMVCModel.FK__Cliente__IdPerso__29572725" FromRole="Cliente" ToRole="Persona" />
+          <NavigationProperty Name="Remision" Relationship="CursoMVCModel.FK__Remision__IdClie__30F848ED" FromRole="Cliente" ToRole="Remision" />
         </EntityType>
         <EntityType Name="Envios">
           <Key>
@@ -265,7 +319,7 @@
           <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Remision" Relationship="Self.FK__Envios__IdRemisi__36B12243" FromRole="Envios" ToRole="Remision" />
+          <NavigationProperty Name="Remision" Relationship="CursoMVCModel.FK__Envios__IdRemisi__37A5467C" FromRole="Envios" ToRole="Remision" />
         </EntityType>
         <EntityType Name="Persona">
           <Key>
@@ -282,14 +336,15 @@
           <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Cliente" Relationship="Self.FK__Cliente__IdPerso__29572725" FromRole="Persona" ToRole="Cliente" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__IdPerso__267ABA7A" FromRole="Persona" ToRole="Usuario" />
+          <NavigationProperty Name="Cliente" Relationship="CursoMVCModel.FK__Cliente__IdPerso__29572725" FromRole="Persona" ToRole="Cliente" />
+          <NavigationProperty Name="Usuario" Relationship="CursoMVCModel.FK__Usuario__IdPerso__267ABA7A" FromRole="Persona" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
             <PropertyRef Name="IdProducto" />
           </Key>
           <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProveedor" Type="Int32" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="Categoria" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="Precio" Type="Decimal" Precision="18" Scale="4" />
@@ -298,7 +353,8 @@
           <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="RemisionDetalle" Relationship="Self.FK__RemisionD__IdPro__33D4B598" FromRole="Producto" ToRole="RemisionDetalle" />
+          <NavigationProperty Name="Proveedor" Relationship="CursoMVCModel.FK__Producto__IdProv__2E1BDC42" FromRole="Producto" ToRole="Proveedor" />
+          <NavigationProperty Name="RemisionDetalle" Relationship="CursoMVCModel.FK__RemisionD__IdPro__34C8D9D1" FromRole="Producto" ToRole="RemisionDetalle" />
         </EntityType>
         <EntityType Name="Proveedor">
           <Key>
@@ -315,6 +371,7 @@
           <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Producto" Relationship="CursoMVCModel.FK__Producto__IdProv__2E1BDC42" FromRole="Proveedor" ToRole="Producto" />
         </EntityType>
         <EntityType Name="Remision">
           <Key>
@@ -330,9 +387,9 @@
           <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Cliente" Relationship="Self.FK__Remision__IdClie__300424B4" FromRole="Remision" ToRole="Cliente" />
-          <NavigationProperty Name="Envios" Relationship="Self.FK__Envios__IdRemisi__36B12243" FromRole="Remision" ToRole="Envios" />
-          <NavigationProperty Name="RemisionDetalle" Relationship="Self.FK__RemisionD__IdRem__32E0915F" FromRole="Remision" ToRole="RemisionDetalle" />
+          <NavigationProperty Name="Cliente" Relationship="CursoMVCModel.FK__Remision__IdClie__30F848ED" FromRole="Remision" ToRole="Cliente" />
+          <NavigationProperty Name="Envios" Relationship="CursoMVCModel.FK__Envios__IdRemisi__37A5467C" FromRole="Remision" ToRole="Envios" />
+          <NavigationProperty Name="RemisionDetalle" Relationship="CursoMVCModel.FK__RemisionD__IdRem__33D4B598" FromRole="Remision" ToRole="RemisionDetalle" />
         </EntityType>
         <EntityType Name="RemisionDetalle">
           <Key>
@@ -344,8 +401,8 @@
           <Property Name="Borrado" Type="Boolean" />
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK__RemisionD__IdPro__33D4B598" FromRole="RemisionDetalle" ToRole="Producto" />
-          <NavigationProperty Name="Remision" Relationship="Self.FK__RemisionD__IdRem__32E0915F" FromRole="RemisionDetalle" ToRole="Remision" />
+          <NavigationProperty Name="Producto" Relationship="CursoMVCModel.FK__RemisionD__IdPro__34C8D9D1" FromRole="RemisionDetalle" ToRole="Producto" />
+          <NavigationProperty Name="Remision" Relationship="CursoMVCModel.FK__RemisionD__IdRem__33D4B598" FromRole="RemisionDetalle" ToRole="Remision" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -362,11 +419,11 @@
           <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Persona" Relationship="Self.FK__Usuario__IdPerso__267ABA7A" FromRole="Usuario" ToRole="Persona" />
+          <NavigationProperty Name="Persona" Relationship="CursoMVCModel.FK__Usuario__IdPerso__267ABA7A" FromRole="Usuario" ToRole="Persona" />
         </EntityType>
         <Association Name="FK__Cliente__IdPerso__29572725">
-          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <End Type="CursoMVCModel.Persona" Role="Persona" Multiplicity="1" />
+          <End Type="CursoMVCModel.Cliente" Role="Cliente" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Persona">
               <PropertyRef Name="IdPersona" />
@@ -376,9 +433,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Remision__IdClie__300424B4">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
-          <End Role="Remision" Type="Self.Remision" Multiplicity="*" />
+        <Association Name="FK__Remision__IdClie__30F848ED">
+          <End Type="CursoMVCModel.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="CursoMVCModel.Remision" Role="Remision" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
               <PropertyRef Name="IdCliente" />
@@ -388,9 +445,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Envios__IdRemisi__36B12243">
-          <End Role="Remision" Type="Self.Remision" Multiplicity="1" />
-          <End Role="Envios" Type="Self.Envios" Multiplicity="*" />
+        <Association Name="FK__Envios__IdRemisi__37A5467C">
+          <End Type="CursoMVCModel.Remision" Role="Remision" Multiplicity="1" />
+          <End Type="CursoMVCModel.Envios" Role="Envios" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Remision">
               <PropertyRef Name="IdRemision" />
@@ -401,8 +458,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Usuario__IdPerso__267ABA7A">
-          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <End Type="CursoMVCModel.Persona" Role="Persona" Multiplicity="1" />
+          <End Type="CursoMVCModel.Usuario" Role="Usuario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Persona">
               <PropertyRef Name="IdPersona" />
@@ -412,9 +469,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RemisionD__IdPro__33D4B598">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="RemisionDetalle" Type="Self.RemisionDetalle" Multiplicity="*" />
+        <Association Name="FK__Producto__IdProv__2E1BDC42">
+          <End Type="CursoMVCModel.Proveedor" Role="Proveedor" Multiplicity="1" />
+          <End Type="CursoMVCModel.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RemisionD__IdPro__34C8D9D1">
+          <End Type="CursoMVCModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="CursoMVCModel.RemisionDetalle" Role="RemisionDetalle" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Producto">
               <PropertyRef Name="IdProducto" />
@@ -424,9 +493,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RemisionD__IdRem__32E0915F">
-          <End Role="Remision" Type="Self.Remision" Multiplicity="1" />
-          <End Role="RemisionDetalle" Type="Self.RemisionDetalle" Multiplicity="*" />
+        <Association Name="FK__RemisionD__IdRem__33D4B598">
+          <End Type="CursoMVCModel.Remision" Role="Remision" Multiplicity="1" />
+          <End Type="CursoMVCModel.RemisionDetalle" Role="RemisionDetalle" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Remision">
               <PropertyRef Name="IdRemision" />
@@ -436,40 +505,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="CursoMVCEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
-          <EntitySet Name="Envios" EntityType="Self.Envios" />
-          <EntitySet Name="Persona" EntityType="Self.Persona" />
-          <EntitySet Name="Producto" EntityType="Self.Producto" />
-          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
-          <EntitySet Name="Remision" EntityType="Self.Remision" />
-          <EntitySet Name="RemisionDetalle" EntityType="Self.RemisionDetalle" />
-          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
-          <AssociationSet Name="FK__Cliente__IdPerso__29572725" Association="Self.FK__Cliente__IdPerso__29572725">
-            <End Role="Persona" EntitySet="Persona" />
-            <End Role="Cliente" EntitySet="Cliente" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Remision__IdClie__300424B4" Association="Self.FK__Remision__IdClie__300424B4">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="Remision" EntitySet="Remision" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Envios__IdRemisi__36B12243" Association="Self.FK__Envios__IdRemisi__36B12243">
-            <End Role="Remision" EntitySet="Remision" />
-            <End Role="Envios" EntitySet="Envios" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Usuario__IdPerso__267ABA7A" Association="Self.FK__Usuario__IdPerso__267ABA7A">
-            <End Role="Persona" EntitySet="Persona" />
-            <End Role="Usuario" EntitySet="Usuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RemisionD__IdPro__33D4B598" Association="Self.FK__RemisionD__IdPro__33D4B598">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RemisionD__IdRem__32E0915F" Association="Self.FK__RemisionD__IdRem__32E0915F">
-            <End Role="Remision" EntitySet="Remision" />
-            <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -479,126 +514,127 @@
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="CursoMVCModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
-                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="Calle" ColumnName="Calle" />
-                <ScalarProperty Name="NoExt" ColumnName="NoExt" />
-                <ScalarProperty Name="NoInt" ColumnName="NoInt" />
-                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
-                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
-                <ScalarProperty Name="RFC" ColumnName="RFC" />
-                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
-                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
-                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
                 <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+                <ScalarProperty Name="NoInt" ColumnName="NoInt" />
+                <ScalarProperty Name="NoExt" ColumnName="NoExt" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Envios">
             <EntityTypeMapping TypeName="CursoMVCModel.Envios">
               <MappingFragment StoreEntitySet="Envios">
-                <ScalarProperty Name="IdEnvio" ColumnName="IdEnvio" />
-                <ScalarProperty Name="IdRemision" ColumnName="IdRemision" />
-                <ScalarProperty Name="FechaEnvio" ColumnName="FechaEnvio" />
-                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
-                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
-                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
-                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
                 <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="FechaEnvio" ColumnName="FechaEnvio" />
+                <ScalarProperty Name="IdRemision" ColumnName="IdRemision" />
+                <ScalarProperty Name="IdEnvio" ColumnName="IdEnvio" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Persona">
             <EntityTypeMapping TypeName="CursoMVCModel.Persona">
               <MappingFragment StoreEntitySet="Persona">
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="APaterno" ColumnName="APaterno" />
-                <ScalarProperty Name="AMaterno" ColumnName="AMaterno" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
-                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
-                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
                 <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="AMaterno" ColumnName="AMaterno" />
+                <ScalarProperty Name="APaterno" ColumnName="APaterno" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Producto">
             <EntityTypeMapping TypeName="CursoMVCModel.Producto">
               <MappingFragment StoreEntitySet="Producto">
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="Existencia" ColumnName="Existencia" />
-                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
-                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
-                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
                 <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="Existencia" ColumnName="Existencia" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Proveedor">
             <EntityTypeMapping TypeName="CursoMVCModel.Proveedor">
               <MappingFragment StoreEntitySet="Proveedor">
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
-                <ScalarProperty Name="Calle" ColumnName="Calle" />
-                <ScalarProperty Name="NoExt" ColumnName="NoExt" />
-                <ScalarProperty Name="NoInt" ColumnName="NoInt" />
-                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
-                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
-                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
-                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
-                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
                 <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+                <ScalarProperty Name="NoInt" ColumnName="NoInt" />
+                <ScalarProperty Name="NoExt" ColumnName="NoExt" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Remision">
             <EntityTypeMapping TypeName="CursoMVCModel.Remision">
               <MappingFragment StoreEntitySet="Remision">
-                <ScalarProperty Name="IdRemision" ColumnName="IdRemision" />
-                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Pagado" ColumnName="Pagado" />
-                <ScalarProperty Name="Cancelado" ColumnName="Cancelado" />
-                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
-                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
-                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
                 <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="Cancelado" ColumnName="Cancelado" />
+                <ScalarProperty Name="Pagado" ColumnName="Pagado" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdRemision" ColumnName="IdRemision" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RemisionDetalle">
             <EntityTypeMapping TypeName="CursoMVCModel.RemisionDetalle">
               <MappingFragment StoreEntitySet="RemisionDetalle">
-                <ScalarProperty Name="IdRemisionDetalle" ColumnName="IdRemisionDetalle" />
-                <ScalarProperty Name="IdRemision" ColumnName="IdRemision" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="Borrado" ColumnName="Borrado" />
-                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
                 <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="Borrado" ColumnName="Borrado" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdRemision" ColumnName="IdRemision" />
+                <ScalarProperty Name="IdRemisionDetalle" ColumnName="IdRemisionDetalle" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="CursoMVCModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
-                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
-                <ScalarProperty Name="IntentosBloqueo" ColumnName="IntentosBloqueo" />
-                <ScalarProperty Name="Bloqueado" ColumnName="Bloqueado" />
-                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
-                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
-                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
                 <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="Bloqueado" ColumnName="Bloqueado" />
+                <ScalarProperty Name="IntentosBloqueo" ColumnName="IntentosBloqueo" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

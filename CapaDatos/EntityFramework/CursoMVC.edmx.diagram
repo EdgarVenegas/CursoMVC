@@ -5,20 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="2ae5ae28548b43d1980447c3fb780a2c" Name="Diagram1">
-        <EntityTypeShape EntityType="CursoMVCModel.Cliente" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CursoMVCModel.Envios" Width="1.5" PointX="7.5" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CursoMVCModel.Persona" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CursoMVCModel.Producto" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CursoMVCModel.Proveedor" Width="1.5" PointX="5.75" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CursoMVCModel.Remision" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CursoMVCModel.RemisionDetalle" Width="1.5" PointX="10.5" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CursoMVCModel.Usuario" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
-        <AssociationConnector Association="CursoMVCModel.FK__Cliente__IdPerso__29572725" ManuallyRouted="false" />
-        <AssociationConnector Association="CursoMVCModel.FK__Remision__IdClie__300424B4" ManuallyRouted="false" />
-        <AssociationConnector Association="CursoMVCModel.FK__Envios__IdRemisi__36B12243" ManuallyRouted="false" />
-        <AssociationConnector Association="CursoMVCModel.FK__Usuario__IdPerso__267ABA7A" ManuallyRouted="false" />
-        <AssociationConnector Association="CursoMVCModel.FK__RemisionD__IdPro__33D4B598" ManuallyRouted="false" />
-        <AssociationConnector Association="CursoMVCModel.FK__RemisionD__IdRem__32E0915F" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CursoMVCModel.Cliente" Width="1.5" PointX="3" PointY="6.625" />
+        <EntityTypeShape EntityType="CursoMVCModel.Envios" Width="1.5" PointX="7.5" PointY="10.375" />
+        <EntityTypeShape EntityType="CursoMVCModel.Persona" Width="1.5" PointX="0.75" PointY="4.625" />
+        <EntityTypeShape EntityType="CursoMVCModel.Producto" Width="1.5" PointX="5.25" PointY="11.75" />
+        <EntityTypeShape EntityType="CursoMVCModel.Proveedor" Width="1.5" PointX="3" PointY="11.75" />
+        <EntityTypeShape EntityType="CursoMVCModel.Remision" Width="1.5" PointX="5.25" PointY="6.625" />
+        <EntityTypeShape EntityType="CursoMVCModel.RemisionDetalle" Width="1.5" PointX="7.5" PointY="6.125" />
+        <EntityTypeShape EntityType="CursoMVCModel.Usuario" Width="1.5" PointX="3" PointY="2.5" />
+        <AssociationConnector Association="CursoMVCModel.FK__Cliente__IdPerso__29572725" />
+        <AssociationConnector Association="CursoMVCModel.FK__Remision__IdClie__30F848ED" />
+        <AssociationConnector Association="CursoMVCModel.FK__Envios__IdRemisi__37A5467C" />
+        <AssociationConnector Association="CursoMVCModel.FK__Usuario__IdPerso__267ABA7A" />
+        <AssociationConnector Association="CursoMVCModel.FK__Producto__IdProv__2E1BDC42" />
+        <AssociationConnector Association="CursoMVCModel.FK__RemisionD__IdPro__34C8D9D1" />
+        <AssociationConnector Association="CursoMVCModel.FK__RemisionD__IdRem__33D4B598" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -14,6 +14,12 @@ namespace CapaDatos.EntityFramework
     
     public partial class Proveedor
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Proveedor()
+        {
+            this.Producto = new HashSet<Producto>();
+        }
+    
         public int IdProveedor { get; set; }
         public string RazonSocial { get; set; }
         public string Calle { get; set; }
@@ -25,5 +31,8 @@ namespace CapaDatos.EntityFramework
         public System.DateTime FechaCreo { get; set; }
         public Nullable<int> IdUsuarioModifico { get; set; }
         public Nullable<System.DateTime> FechaModifico { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Producto> Producto { get; set; }
     }
 }

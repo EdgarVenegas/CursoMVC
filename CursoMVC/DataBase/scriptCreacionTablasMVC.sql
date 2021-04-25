@@ -57,6 +57,7 @@ FechaModifico datetime
 GO
 create table Producto(--Jesus
 IdProducto int identity(1,1) not null primary key,
+IdProveedor int foreign key references Proveedor(IdProveedor) not null,
 Nombre nvarchar(32),
 Categoria nvarchar(32),
 Precio decimal(18,4),
