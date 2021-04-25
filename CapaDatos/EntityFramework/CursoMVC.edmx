@@ -1,0 +1,628 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CursoMVCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPersona" Type="int" Nullable="false" />
+          <Property Name="Calle" Type="nvarchar" MaxLength="50" />
+          <Property Name="NoExt" Type="nvarchar" MaxLength="50" />
+          <Property Name="NoInt" Type="nvarchar" MaxLength="50" />
+          <Property Name="Colonia" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ciudad" Type="nvarchar" MaxLength="50" />
+          <Property Name="RFC" Type="nvarchar" MaxLength="13" />
+          <Property Name="IdUsuarioCreo" Type="int" Nullable="false" />
+          <Property Name="FechaCreo" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuarioModifico" Type="int" />
+          <Property Name="FechaModifico" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Envios">
+          <Key>
+            <PropertyRef Name="IdEnvio" />
+          </Key>
+          <Property Name="IdEnvio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdRemision" Type="int" Nullable="false" />
+          <Property Name="FechaEnvio" Type="datetime" />
+          <Property Name="Estatus" Type="char" MaxLength="1" />
+          <Property Name="IdUsuarioCreo" Type="int" Nullable="false" />
+          <Property Name="FechaCreo" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuarioModifico" Type="int" />
+          <Property Name="FechaModifico" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="IdPersona" />
+          </Key>
+          <Property Name="IdPersona" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="32" />
+          <Property Name="APaterno" Type="nvarchar" MaxLength="32" />
+          <Property Name="AMaterno" Type="nvarchar" MaxLength="32" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="15" />
+          <Property Name="Email" Type="nvarchar" MaxLength="32" />
+          <Property Name="FechaNacimiento" Type="datetime" />
+          <Property Name="IdUsuarioCreo" Type="int" />
+          <Property Name="FechaCreo" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuarioModifico" Type="int" />
+          <Property Name="FechaModifico" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="32" />
+          <Property Name="Categoria" Type="nvarchar" MaxLength="32" />
+          <Property Name="Precio" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Existencia" Type="int" />
+          <Property Name="IdUsuarioCreo" Type="int" Nullable="false" />
+          <Property Name="FechaCreo" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuarioModifico" Type="int" />
+          <Property Name="FechaModifico" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RazonSocial" Type="nvarchar" MaxLength="32" />
+          <Property Name="Calle" Type="nvarchar" MaxLength="50" />
+          <Property Name="NoExt" Type="nvarchar" MaxLength="50" />
+          <Property Name="NoInt" Type="nvarchar" MaxLength="50" />
+          <Property Name="Colonia" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ciudad" Type="nvarchar" MaxLength="50" />
+          <Property Name="IdUsuarioCreo" Type="int" Nullable="false" />
+          <Property Name="FechaCreo" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuarioModifico" Type="int" />
+          <Property Name="FechaModifico" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Remision">
+          <Key>
+            <PropertyRef Name="IdRemision" />
+          </Key>
+          <Property Name="IdRemision" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Pagado" Type="bit" />
+          <Property Name="Cancelado" Type="bit" />
+          <Property Name="IdUsuarioCreo" Type="int" Nullable="false" />
+          <Property Name="FechaCreo" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuarioModifico" Type="int" />
+          <Property Name="FechaModifico" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RemisionDetalle">
+          <Key>
+            <PropertyRef Name="IdRemisionDetalle" />
+          </Key>
+          <Property Name="IdRemisionDetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdRemision" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Borrado" Type="bit" />
+          <Property Name="IdUsuarioModifico" Type="int" />
+          <Property Name="FechaModifico" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPersona" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="32" />
+          <Property Name="Contrasena" Type="nvarchar" MaxLength="50" />
+          <Property Name="Estatus" Type="bit" />
+          <Property Name="IntentosBloqueo" Type="tinyint" />
+          <Property Name="Bloqueado" Type="bit" />
+          <Property Name="IdUsuarioCreo" Type="int" Nullable="false" />
+          <Property Name="FechaCreo" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuarioModifico" Type="int" />
+          <Property Name="FechaModifico" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__Cliente__IdPerso__29572725">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="IdPersona" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Envios__IdRemisi__36B12243">
+          <End Role="Remision" Type="Self.Remision" Multiplicity="1" />
+          <End Role="Envios" Type="Self.Envios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Remision">
+              <PropertyRef Name="IdRemision" />
+            </Principal>
+            <Dependent Role="Envios">
+              <PropertyRef Name="IdRemision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Remision__IdClie__300424B4">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Remision" Type="Self.Remision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Remision">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RemisionD__IdPro__33D4B598">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="RemisionDetalle" Type="Self.RemisionDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="RemisionDetalle">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RemisionD__IdRem__32E0915F">
+          <End Role="Remision" Type="Self.Remision" Multiplicity="1" />
+          <End Role="RemisionDetalle" Type="Self.RemisionDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Remision">
+              <PropertyRef Name="IdRemision" />
+            </Principal>
+            <Dependent Role="RemisionDetalle">
+              <PropertyRef Name="IdRemision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__IdPerso__267ABA7A">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="IdPersona" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CursoMVCModelStoreContainer">
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Envios" EntityType="Self.Envios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Remision" EntityType="Self.Remision" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RemisionDetalle" EntityType="Self.RemisionDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Cliente__IdPerso__29572725" Association="Self.FK__Cliente__IdPerso__29572725">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Envios__IdRemisi__36B12243" Association="Self.FK__Envios__IdRemisi__36B12243">
+            <End Role="Remision" EntitySet="Remision" />
+            <End Role="Envios" EntitySet="Envios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Remision__IdClie__300424B4" Association="Self.FK__Remision__IdClie__300424B4">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Remision" EntitySet="Remision" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RemisionD__IdPro__33D4B598" Association="Self.FK__RemisionD__IdPro__33D4B598">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RemisionD__IdRem__32E0915F" Association="Self.FK__RemisionD__IdRem__32E0915F">
+            <End Role="Remision" EntitySet="Remision" />
+            <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__IdPerso__267ABA7A" Association="Self.FK__Usuario__IdPerso__267ABA7A">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CursoMVCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPersona" Type="Int32" Nullable="false" />
+          <Property Name="Calle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NoExt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NoInt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Colonia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RFC" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="IdUsuarioCreo" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuarioModifico" Type="Int32" />
+          <Property Name="FechaModifico" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Cliente__IdPerso__29572725" FromRole="Cliente" ToRole="Persona" />
+          <NavigationProperty Name="Remision" Relationship="Self.FK__Remision__IdClie__300424B4" FromRole="Cliente" ToRole="Remision" />
+        </EntityType>
+        <EntityType Name="Envios">
+          <Key>
+            <PropertyRef Name="IdEnvio" />
+          </Key>
+          <Property Name="IdEnvio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRemision" Type="Int32" Nullable="false" />
+          <Property Name="FechaEnvio" Type="DateTime" Precision="3" />
+          <Property Name="Estatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IdUsuarioCreo" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuarioModifico" Type="Int32" />
+          <Property Name="FechaModifico" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Remision" Relationship="Self.FK__Envios__IdRemisi__36B12243" FromRole="Envios" ToRole="Remision" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="IdPersona" />
+          </Key>
+          <Property Name="IdPersona" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="APaterno" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="AMaterno" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioCreo" Type="Int32" />
+          <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuarioModifico" Type="Int32" />
+          <Property Name="FechaModifico" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Cliente__IdPerso__29572725" FromRole="Persona" ToRole="Cliente" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__IdPerso__267ABA7A" FromRole="Persona" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Categoria" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Precio" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Existencia" Type="Int32" />
+          <Property Name="IdUsuarioCreo" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuarioModifico" Type="Int32" />
+          <Property Name="FechaModifico" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="RemisionDetalle" Relationship="Self.FK__RemisionD__IdPro__33D4B598" FromRole="Producto" ToRole="RemisionDetalle" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RazonSocial" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Calle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NoExt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NoInt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Colonia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdUsuarioCreo" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuarioModifico" Type="Int32" />
+          <Property Name="FechaModifico" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Remision">
+          <Key>
+            <PropertyRef Name="IdRemision" />
+          </Key>
+          <Property Name="IdRemision" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Pagado" Type="Boolean" />
+          <Property Name="Cancelado" Type="Boolean" />
+          <Property Name="IdUsuarioCreo" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuarioModifico" Type="Int32" />
+          <Property Name="FechaModifico" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Remision__IdClie__300424B4" FromRole="Remision" ToRole="Cliente" />
+          <NavigationProperty Name="Envios" Relationship="Self.FK__Envios__IdRemisi__36B12243" FromRole="Remision" ToRole="Envios" />
+          <NavigationProperty Name="RemisionDetalle" Relationship="Self.FK__RemisionD__IdRem__32E0915F" FromRole="Remision" ToRole="RemisionDetalle" />
+        </EntityType>
+        <EntityType Name="RemisionDetalle">
+          <Key>
+            <PropertyRef Name="IdRemisionDetalle" />
+          </Key>
+          <Property Name="IdRemisionDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRemision" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Borrado" Type="Boolean" />
+          <Property Name="IdUsuarioModifico" Type="Int32" />
+          <Property Name="FechaModifico" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__RemisionD__IdPro__33D4B598" FromRole="RemisionDetalle" ToRole="Producto" />
+          <NavigationProperty Name="Remision" Relationship="Self.FK__RemisionD__IdRem__32E0915F" FromRole="RemisionDetalle" ToRole="Remision" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPersona" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Estatus" Type="Boolean" />
+          <Property Name="IntentosBloqueo" Type="Byte" />
+          <Property Name="Bloqueado" Type="Boolean" />
+          <Property Name="IdUsuarioCreo" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuarioModifico" Type="Int32" />
+          <Property Name="FechaModifico" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Usuario__IdPerso__267ABA7A" FromRole="Usuario" ToRole="Persona" />
+        </EntityType>
+        <Association Name="FK__Cliente__IdPerso__29572725">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="IdPersona" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Remision__IdClie__300424B4">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Remision" Type="Self.Remision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Remision">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Envios__IdRemisi__36B12243">
+          <End Role="Remision" Type="Self.Remision" Multiplicity="1" />
+          <End Role="Envios" Type="Self.Envios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Remision">
+              <PropertyRef Name="IdRemision" />
+            </Principal>
+            <Dependent Role="Envios">
+              <PropertyRef Name="IdRemision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__IdPerso__267ABA7A">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="IdPersona" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RemisionD__IdPro__33D4B598">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="RemisionDetalle" Type="Self.RemisionDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="RemisionDetalle">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RemisionD__IdRem__32E0915F">
+          <End Role="Remision" Type="Self.Remision" Multiplicity="1" />
+          <End Role="RemisionDetalle" Type="Self.RemisionDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Remision">
+              <PropertyRef Name="IdRemision" />
+            </Principal>
+            <Dependent Role="RemisionDetalle">
+              <PropertyRef Name="IdRemision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CursoMVCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Envios" EntityType="Self.Envios" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
+          <EntitySet Name="Remision" EntityType="Self.Remision" />
+          <EntitySet Name="RemisionDetalle" EntityType="Self.RemisionDetalle" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK__Cliente__IdPerso__29572725" Association="Self.FK__Cliente__IdPerso__29572725">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Remision__IdClie__300424B4" Association="Self.FK__Remision__IdClie__300424B4">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Remision" EntitySet="Remision" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Envios__IdRemisi__36B12243" Association="Self.FK__Envios__IdRemisi__36B12243">
+            <End Role="Remision" EntitySet="Remision" />
+            <End Role="Envios" EntitySet="Envios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__IdPerso__267ABA7A" Association="Self.FK__Usuario__IdPerso__267ABA7A">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RemisionD__IdPro__33D4B598" Association="Self.FK__RemisionD__IdPro__33D4B598">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RemisionD__IdRem__32E0915F" Association="Self.FK__RemisionD__IdRem__32E0915F">
+            <End Role="Remision" EntitySet="Remision" />
+            <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CursoMVCModelStoreContainer" CdmEntityContainer="CursoMVCEntities">
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="CursoMVCModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="NoExt" ColumnName="NoExt" />
+                <ScalarProperty Name="NoInt" ColumnName="NoInt" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Envios">
+            <EntityTypeMapping TypeName="CursoMVCModel.Envios">
+              <MappingFragment StoreEntitySet="Envios">
+                <ScalarProperty Name="IdEnvio" ColumnName="IdEnvio" />
+                <ScalarProperty Name="IdRemision" ColumnName="IdRemision" />
+                <ScalarProperty Name="FechaEnvio" ColumnName="FechaEnvio" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Persona">
+            <EntityTypeMapping TypeName="CursoMVCModel.Persona">
+              <MappingFragment StoreEntitySet="Persona">
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="APaterno" ColumnName="APaterno" />
+                <ScalarProperty Name="AMaterno" ColumnName="AMaterno" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="CursoMVCModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Existencia" ColumnName="Existencia" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedor">
+            <EntityTypeMapping TypeName="CursoMVCModel.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedor">
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="NoExt" ColumnName="NoExt" />
+                <ScalarProperty Name="NoInt" ColumnName="NoInt" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Remision">
+            <EntityTypeMapping TypeName="CursoMVCModel.Remision">
+              <MappingFragment StoreEntitySet="Remision">
+                <ScalarProperty Name="IdRemision" ColumnName="IdRemision" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Pagado" ColumnName="Pagado" />
+                <ScalarProperty Name="Cancelado" ColumnName="Cancelado" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RemisionDetalle">
+            <EntityTypeMapping TypeName="CursoMVCModel.RemisionDetalle">
+              <MappingFragment StoreEntitySet="RemisionDetalle">
+                <ScalarProperty Name="IdRemisionDetalle" ColumnName="IdRemisionDetalle" />
+                <ScalarProperty Name="IdRemision" ColumnName="IdRemision" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Borrado" ColumnName="Borrado" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="CursoMVCModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="IntentosBloqueo" ColumnName="IntentosBloqueo" />
+                <ScalarProperty Name="Bloqueado" ColumnName="Bloqueado" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
