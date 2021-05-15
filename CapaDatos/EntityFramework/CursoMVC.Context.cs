@@ -27,6 +27,9 @@ namespace CapaDatos.EntityFramework
     
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Envios> Envios { get; set; }
+        public virtual DbSet<Formula> Formula { get; set; }
+        public virtual DbSet<FormulaDetalle> FormulaDetalle { get; set; }
+        public virtual DbSet<Insumo> Insumo { get; set; }
         public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
         public virtual DbSet<Proveedor> Proveedor { get; set; }

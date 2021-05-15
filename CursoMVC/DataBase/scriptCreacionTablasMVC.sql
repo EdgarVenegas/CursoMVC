@@ -55,13 +55,45 @@ IdUsuarioModifico int,
 FechaModifico datetime
 )
 GO
+create table Insumo(--JL
+IdInsumo int identity(1,1) not null primary key,
+IdProveedor int foreign key references Proveedor(IdProveedor),
+Categoria nvarchar(32),
+Nombre nvarchar(32),
+Marca nvarchar(32),Cancelado bit,
+Activo bit,
+IdUsuarioCreo int not null,
+FechaCreo datetime not null,
+IdUsuarioModifico int,
+FechaModifico datetime
+)
+GO
+Create table Formula(--janet
+IdFormula int identity(1,1) not null primary key,
+Nombre nvarchar(32),
+Activo bit,
+IdUsuarioCreo int not null,
+FechaCreo datetime not null,
+IdUsuarioModifico int,
+FechaModifico datetime
+)
+GO
+create Table FormulaDetalle(--janet
+IdFormulaDetalle int not null identity(1,1) primary key,
+IdFromula int foreign key references Formula(IdFormula) not null,
+IdInsumo int foreign key references Insumo(IdInsumo) not null,
+Cantidad decimal(18,2),
+Borrado bit,
+IdUsuarioModifico int,
+FechaModifico datetime
+)
+GO
 create table Producto(--Jesus
 IdProducto int identity(1,1) not null primary key,
-IdProveedor int foreign key references Proveedor(IdProveedor) not null,
+IdFormula int foreign key references Formula(IdFormula) not null,
 Nombre nvarchar(32),
 Categoria nvarchar(32),
 Precio decimal(18,4),
-Existencia int,
 IdUsuarioCreo int not null,
 FechaCreo datetime not null,
 IdUsuarioModifico int,

@@ -12,26 +12,26 @@ namespace CapaDatos.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class Producto
+    public partial class Formula
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Producto()
+        public Formula()
         {
-            this.RemisionDetalle = new HashSet<RemisionDetalle>();
+            this.FormulaDetalle = new HashSet<FormulaDetalle>();
+            this.Producto = new HashSet<Producto>();
         }
     
-        public int IdProducto { get; set; }
         public int IdFormula { get; set; }
         public string Nombre { get; set; }
-        public string Categoria { get; set; }
-        public Nullable<decimal> Precio { get; set; }
+        public Nullable<bool> Activo { get; set; }
         public int IdUsuarioCreo { get; set; }
         public System.DateTime FechaCreo { get; set; }
         public Nullable<int> IdUsuarioModifico { get; set; }
         public Nullable<System.DateTime> FechaModifico { get; set; }
     
-        public virtual Formula Formula { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RemisionDetalle> RemisionDetalle { get; set; }
+        public virtual ICollection<FormulaDetalle> FormulaDetalle { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Producto> Producto { get; set; }
     }
 }

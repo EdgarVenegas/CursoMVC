@@ -35,6 +35,46 @@
           <Property Name="IdUsuarioModifico" Type="int" />
           <Property Name="FechaModifico" Type="datetime" />
         </EntityType>
+        <EntityType Name="Formula">
+          <Key>
+            <PropertyRef Name="IdFormula" />
+          </Key>
+          <Property Name="IdFormula" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="32" />
+          <Property Name="Activo" Type="bit" />
+          <Property Name="IdUsuarioCreo" Type="int" Nullable="false" />
+          <Property Name="FechaCreo" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuarioModifico" Type="int" />
+          <Property Name="FechaModifico" Type="datetime" />
+        </EntityType>
+        <EntityType Name="FormulaDetalle">
+          <Key>
+            <PropertyRef Name="IdFormulaDetalle" />
+          </Key>
+          <Property Name="IdFormulaDetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdFromula" Type="int" Nullable="false" />
+          <Property Name="IdInsumo" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Borrado" Type="bit" />
+          <Property Name="IdUsuarioModifico" Type="int" />
+          <Property Name="FechaModifico" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Insumo">
+          <Key>
+            <PropertyRef Name="IdInsumo" />
+          </Key>
+          <Property Name="IdInsumo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProveedor" Type="int" />
+          <Property Name="Categoria" Type="nvarchar" MaxLength="32" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="32" />
+          <Property Name="Marca" Type="nvarchar" MaxLength="32" />
+          <Property Name="Cancelado" Type="bit" />
+          <Property Name="Activo" Type="bit" />
+          <Property Name="IdUsuarioCreo" Type="int" Nullable="false" />
+          <Property Name="FechaCreo" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuarioModifico" Type="int" />
+          <Property Name="FechaModifico" Type="datetime" />
+        </EntityType>
         <EntityType Name="Persona">
           <Key>
             <PropertyRef Name="IdPersona" />
@@ -56,11 +96,10 @@
             <PropertyRef Name="IdProducto" />
           </Key>
           <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdProveedor" Type="int" Nullable="false" />
+          <Property Name="IdFormula" Type="int" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="32" />
           <Property Name="Categoria" Type="nvarchar" MaxLength="32" />
           <Property Name="Precio" Type="decimal" Precision="18" Scale="4" />
-          <Property Name="Existencia" Type="int" />
           <Property Name="IdUsuarioCreo" Type="int" Nullable="false" />
           <Property Name="FechaCreo" Type="datetime" Nullable="false" />
           <Property Name="IdUsuarioModifico" Type="int" />
@@ -136,7 +175,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Envios__IdRemisi__37A5467C">
+        <Association Name="FK__Envios__IdRemisi__403A8C7D">
           <End Role="Remision" Type="Self.Remision" Multiplicity="1" />
           <End Role="Envios" Type="Self.Envios" Multiplicity="*" />
           <ReferentialConstraint>
@@ -148,19 +187,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Producto__IdProv__2E1BDC42">
-          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
-          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+        <Association Name="FK__FormulaDe__IdFro__32E0915F">
+          <End Role="Formula" Type="Self.Formula" Multiplicity="1" />
+          <End Role="FormulaDetalle" Type="Self.FormulaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formula">
+              <PropertyRef Name="IdFormula" />
+            </Principal>
+            <Dependent Role="FormulaDetalle">
+              <PropertyRef Name="IdFromula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FormulaDe__IdIns__33D4B598">
+          <End Role="Insumo" Type="Self.Insumo" Multiplicity="1" />
+          <End Role="FormulaDetalle" Type="Self.FormulaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="IdInsumo" />
+            </Principal>
+            <Dependent Role="FormulaDetalle">
+              <PropertyRef Name="IdInsumo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Insumo__IdProvee__2E1BDC42">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+          <End Role="Insumo" Type="Self.Insumo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Proveedor">
               <PropertyRef Name="IdProveedor" />
             </Principal>
-            <Dependent Role="Producto">
+            <Dependent Role="Insumo">
               <PropertyRef Name="IdProveedor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Remision__IdClie__30F848ED">
+        <Association Name="FK__Producto__IdForm__36B12243">
+          <End Role="Formula" Type="Self.Formula" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formula">
+              <PropertyRef Name="IdFormula" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdFormula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Remision__IdClie__398D8EEE">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
           <End Role="Remision" Type="Self.Remision" Multiplicity="*" />
           <ReferentialConstraint>
@@ -172,7 +247,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RemisionD__IdPro__34C8D9D1">
+        <Association Name="FK__RemisionD__IdPro__3D5E1FD2">
           <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
           <End Role="RemisionDetalle" Type="Self.RemisionDetalle" Multiplicity="*" />
           <ReferentialConstraint>
@@ -184,7 +259,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RemisionD__IdRem__33D4B598">
+        <Association Name="FK__RemisionD__IdRem__3C69FB99">
           <End Role="Remision" Type="Self.Remision" Multiplicity="1" />
           <End Role="RemisionDetalle" Type="Self.RemisionDetalle" Multiplicity="*" />
           <ReferentialConstraint>
@@ -211,6 +286,9 @@
         <EntityContainer Name="CursoMVCModelStoreContainer">
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Envios" EntityType="Self.Envios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Formula" EntityType="Self.Formula" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FormulaDetalle" EntityType="Self.FormulaDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Insumo" EntityType="Self.Insumo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
@@ -221,23 +299,35 @@
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
-          <AssociationSet Name="FK__Envios__IdRemisi__37A5467C" Association="Self.FK__Envios__IdRemisi__37A5467C">
+          <AssociationSet Name="FK__Envios__IdRemisi__403A8C7D" Association="Self.FK__Envios__IdRemisi__403A8C7D">
             <End Role="Remision" EntitySet="Remision" />
             <End Role="Envios" EntitySet="Envios" />
           </AssociationSet>
-          <AssociationSet Name="FK__Producto__IdProv__2E1BDC42" Association="Self.FK__Producto__IdProv__2E1BDC42">
+          <AssociationSet Name="FK__FormulaDe__IdFro__32E0915F" Association="Self.FK__FormulaDe__IdFro__32E0915F">
+            <End Role="Formula" EntitySet="Formula" />
+            <End Role="FormulaDetalle" EntitySet="FormulaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FormulaDe__IdIns__33D4B598" Association="Self.FK__FormulaDe__IdIns__33D4B598">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="FormulaDetalle" EntitySet="FormulaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Insumo__IdProvee__2E1BDC42" Association="Self.FK__Insumo__IdProvee__2E1BDC42">
             <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Insumo" EntitySet="Insumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdForm__36B12243" Association="Self.FK__Producto__IdForm__36B12243">
+            <End Role="Formula" EntitySet="Formula" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
-          <AssociationSet Name="FK__Remision__IdClie__30F848ED" Association="Self.FK__Remision__IdClie__30F848ED">
+          <AssociationSet Name="FK__Remision__IdClie__398D8EEE" Association="Self.FK__Remision__IdClie__398D8EEE">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="Remision" EntitySet="Remision" />
           </AssociationSet>
-          <AssociationSet Name="FK__RemisionD__IdPro__34C8D9D1" Association="Self.FK__RemisionD__IdPro__34C8D9D1">
+          <AssociationSet Name="FK__RemisionD__IdPro__3D5E1FD2" Association="Self.FK__RemisionD__IdPro__3D5E1FD2">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
           </AssociationSet>
-          <AssociationSet Name="FK__RemisionD__IdRem__33D4B598" Association="Self.FK__RemisionD__IdRem__33D4B598">
+          <AssociationSet Name="FK__RemisionD__IdRem__3C69FB99" Association="Self.FK__RemisionD__IdRem__3C69FB99">
             <End Role="Remision" EntitySet="Remision" />
             <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
           </AssociationSet>
@@ -253,6 +343,9 @@
         <EntityContainer Name="CursoMVCEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cliente" EntityType="CursoMVCModel.Cliente" />
           <EntitySet Name="Envios" EntityType="CursoMVCModel.Envios" />
+          <EntitySet Name="Formula" EntityType="CursoMVCModel.Formula" />
+          <EntitySet Name="FormulaDetalle" EntityType="CursoMVCModel.FormulaDetalle" />
+          <EntitySet Name="Insumo" EntityType="CursoMVCModel.Insumo" />
           <EntitySet Name="Persona" EntityType="CursoMVCModel.Persona" />
           <EntitySet Name="Producto" EntityType="CursoMVCModel.Producto" />
           <EntitySet Name="Proveedor" EntityType="CursoMVCModel.Proveedor" />
@@ -263,27 +356,39 @@
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
-          <AssociationSet Name="FK__Remision__IdClie__30F848ED" Association="CursoMVCModel.FK__Remision__IdClie__30F848ED">
+          <AssociationSet Name="FK__Remision__IdClie__398D8EEE" Association="CursoMVCModel.FK__Remision__IdClie__398D8EEE">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="Remision" EntitySet="Remision" />
           </AssociationSet>
-          <AssociationSet Name="FK__Envios__IdRemisi__37A5467C" Association="CursoMVCModel.FK__Envios__IdRemisi__37A5467C">
+          <AssociationSet Name="FK__Envios__IdRemisi__403A8C7D" Association="CursoMVCModel.FK__Envios__IdRemisi__403A8C7D">
             <End Role="Remision" EntitySet="Remision" />
             <End Role="Envios" EntitySet="Envios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FormulaDe__IdFro__32E0915F" Association="CursoMVCModel.FK__FormulaDe__IdFro__32E0915F">
+            <End Role="Formula" EntitySet="Formula" />
+            <End Role="FormulaDetalle" EntitySet="FormulaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdForm__36B12243" Association="CursoMVCModel.FK__Producto__IdForm__36B12243">
+            <End Role="Formula" EntitySet="Formula" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FormulaDe__IdIns__33D4B598" Association="CursoMVCModel.FK__FormulaDe__IdIns__33D4B598">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="FormulaDetalle" EntitySet="FormulaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Insumo__IdProvee__2E1BDC42" Association="CursoMVCModel.FK__Insumo__IdProvee__2E1BDC42">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Insumo" EntitySet="Insumo" />
           </AssociationSet>
           <AssociationSet Name="FK__Usuario__IdPerso__267ABA7A" Association="CursoMVCModel.FK__Usuario__IdPerso__267ABA7A">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <AssociationSet Name="FK__Producto__IdProv__2E1BDC42" Association="CursoMVCModel.FK__Producto__IdProv__2E1BDC42">
-            <End Role="Proveedor" EntitySet="Proveedor" />
-            <End Role="Producto" EntitySet="Producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RemisionD__IdPro__34C8D9D1" Association="CursoMVCModel.FK__RemisionD__IdPro__34C8D9D1">
+          <AssociationSet Name="FK__RemisionD__IdPro__3D5E1FD2" Association="CursoMVCModel.FK__RemisionD__IdPro__3D5E1FD2">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
           </AssociationSet>
-          <AssociationSet Name="FK__RemisionD__IdRem__33D4B598" Association="CursoMVCModel.FK__RemisionD__IdRem__33D4B598">
+          <AssociationSet Name="FK__RemisionD__IdRem__3C69FB99" Association="CursoMVCModel.FK__RemisionD__IdRem__3C69FB99">
             <End Role="Remision" EntitySet="Remision" />
             <End Role="RemisionDetalle" EntitySet="RemisionDetalle" />
           </AssociationSet>
@@ -305,7 +410,7 @@
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Persona" Relationship="CursoMVCModel.FK__Cliente__IdPerso__29572725" FromRole="Cliente" ToRole="Persona" />
-          <NavigationProperty Name="Remision" Relationship="CursoMVCModel.FK__Remision__IdClie__30F848ED" FromRole="Cliente" ToRole="Remision" />
+          <NavigationProperty Name="Remision" Relationship="CursoMVCModel.FK__Remision__IdClie__398D8EEE" FromRole="Cliente" ToRole="Remision" />
         </EntityType>
         <EntityType Name="Envios">
           <Key>
@@ -319,7 +424,53 @@
           <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Remision" Relationship="CursoMVCModel.FK__Envios__IdRemisi__37A5467C" FromRole="Envios" ToRole="Remision" />
+          <NavigationProperty Name="Remision" Relationship="CursoMVCModel.FK__Envios__IdRemisi__403A8C7D" FromRole="Envios" ToRole="Remision" />
+        </EntityType>
+        <EntityType Name="Formula">
+          <Key>
+            <PropertyRef Name="IdFormula" />
+          </Key>
+          <Property Name="IdFormula" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" />
+          <Property Name="IdUsuarioCreo" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuarioModifico" Type="Int32" />
+          <Property Name="FechaModifico" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FormulaDetalle" Relationship="CursoMVCModel.FK__FormulaDe__IdFro__32E0915F" FromRole="Formula" ToRole="FormulaDetalle" />
+          <NavigationProperty Name="Producto" Relationship="CursoMVCModel.FK__Producto__IdForm__36B12243" FromRole="Formula" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="FormulaDetalle">
+          <Key>
+            <PropertyRef Name="IdFormulaDetalle" />
+          </Key>
+          <Property Name="IdFormulaDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFromula" Type="Int32" Nullable="false" />
+          <Property Name="IdInsumo" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Borrado" Type="Boolean" />
+          <Property Name="IdUsuarioModifico" Type="Int32" />
+          <Property Name="FechaModifico" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Formula" Relationship="CursoMVCModel.FK__FormulaDe__IdFro__32E0915F" FromRole="FormulaDetalle" ToRole="Formula" />
+          <NavigationProperty Name="Insumo" Relationship="CursoMVCModel.FK__FormulaDe__IdIns__33D4B598" FromRole="FormulaDetalle" ToRole="Insumo" />
+        </EntityType>
+        <EntityType Name="Insumo">
+          <Key>
+            <PropertyRef Name="IdInsumo" />
+          </Key>
+          <Property Name="IdInsumo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProveedor" Type="Int32" />
+          <Property Name="Categoria" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Marca" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Cancelado" Type="Boolean" />
+          <Property Name="Activo" Type="Boolean" />
+          <Property Name="IdUsuarioCreo" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuarioModifico" Type="Int32" />
+          <Property Name="FechaModifico" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FormulaDetalle" Relationship="CursoMVCModel.FK__FormulaDe__IdIns__33D4B598" FromRole="Insumo" ToRole="FormulaDetalle" />
+          <NavigationProperty Name="Proveedor" Relationship="CursoMVCModel.FK__Insumo__IdProvee__2E1BDC42" FromRole="Insumo" ToRole="Proveedor" />
         </EntityType>
         <EntityType Name="Persona">
           <Key>
@@ -344,17 +495,16 @@
             <PropertyRef Name="IdProducto" />
           </Key>
           <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+          <Property Name="IdFormula" Type="Int32" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="Categoria" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="Precio" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="Existencia" Type="Int32" />
           <Property Name="IdUsuarioCreo" Type="Int32" Nullable="false" />
           <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Proveedor" Relationship="CursoMVCModel.FK__Producto__IdProv__2E1BDC42" FromRole="Producto" ToRole="Proveedor" />
-          <NavigationProperty Name="RemisionDetalle" Relationship="CursoMVCModel.FK__RemisionD__IdPro__34C8D9D1" FromRole="Producto" ToRole="RemisionDetalle" />
+          <NavigationProperty Name="Formula" Relationship="CursoMVCModel.FK__Producto__IdForm__36B12243" FromRole="Producto" ToRole="Formula" />
+          <NavigationProperty Name="RemisionDetalle" Relationship="CursoMVCModel.FK__RemisionD__IdPro__3D5E1FD2" FromRole="Producto" ToRole="RemisionDetalle" />
         </EntityType>
         <EntityType Name="Proveedor">
           <Key>
@@ -371,7 +521,7 @@
           <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Producto" Relationship="CursoMVCModel.FK__Producto__IdProv__2E1BDC42" FromRole="Proveedor" ToRole="Producto" />
+          <NavigationProperty Name="Insumo" Relationship="CursoMVCModel.FK__Insumo__IdProvee__2E1BDC42" FromRole="Proveedor" ToRole="Insumo" />
         </EntityType>
         <EntityType Name="Remision">
           <Key>
@@ -387,9 +537,9 @@
           <Property Name="FechaCreo" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Cliente" Relationship="CursoMVCModel.FK__Remision__IdClie__30F848ED" FromRole="Remision" ToRole="Cliente" />
-          <NavigationProperty Name="Envios" Relationship="CursoMVCModel.FK__Envios__IdRemisi__37A5467C" FromRole="Remision" ToRole="Envios" />
-          <NavigationProperty Name="RemisionDetalle" Relationship="CursoMVCModel.FK__RemisionD__IdRem__33D4B598" FromRole="Remision" ToRole="RemisionDetalle" />
+          <NavigationProperty Name="Cliente" Relationship="CursoMVCModel.FK__Remision__IdClie__398D8EEE" FromRole="Remision" ToRole="Cliente" />
+          <NavigationProperty Name="Envios" Relationship="CursoMVCModel.FK__Envios__IdRemisi__403A8C7D" FromRole="Remision" ToRole="Envios" />
+          <NavigationProperty Name="RemisionDetalle" Relationship="CursoMVCModel.FK__RemisionD__IdRem__3C69FB99" FromRole="Remision" ToRole="RemisionDetalle" />
         </EntityType>
         <EntityType Name="RemisionDetalle">
           <Key>
@@ -401,8 +551,8 @@
           <Property Name="Borrado" Type="Boolean" />
           <Property Name="IdUsuarioModifico" Type="Int32" />
           <Property Name="FechaModifico" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Producto" Relationship="CursoMVCModel.FK__RemisionD__IdPro__34C8D9D1" FromRole="RemisionDetalle" ToRole="Producto" />
-          <NavigationProperty Name="Remision" Relationship="CursoMVCModel.FK__RemisionD__IdRem__33D4B598" FromRole="RemisionDetalle" ToRole="Remision" />
+          <NavigationProperty Name="Producto" Relationship="CursoMVCModel.FK__RemisionD__IdPro__3D5E1FD2" FromRole="RemisionDetalle" ToRole="Producto" />
+          <NavigationProperty Name="Remision" Relationship="CursoMVCModel.FK__RemisionD__IdRem__3C69FB99" FromRole="RemisionDetalle" ToRole="Remision" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -433,7 +583,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Remision__IdClie__30F848ED">
+        <Association Name="FK__Remision__IdClie__398D8EEE">
           <End Type="CursoMVCModel.Cliente" Role="Cliente" Multiplicity="1" />
           <End Type="CursoMVCModel.Remision" Role="Remision" Multiplicity="*" />
           <ReferentialConstraint>
@@ -445,7 +595,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Envios__IdRemisi__37A5467C">
+        <Association Name="FK__Envios__IdRemisi__403A8C7D">
           <End Type="CursoMVCModel.Remision" Role="Remision" Multiplicity="1" />
           <End Type="CursoMVCModel.Envios" Role="Envios" Multiplicity="*" />
           <ReferentialConstraint>
@@ -454,6 +604,54 @@
             </Principal>
             <Dependent Role="Envios">
               <PropertyRef Name="IdRemision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FormulaDe__IdFro__32E0915F">
+          <End Type="CursoMVCModel.Formula" Role="Formula" Multiplicity="1" />
+          <End Type="CursoMVCModel.FormulaDetalle" Role="FormulaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formula">
+              <PropertyRef Name="IdFormula" />
+            </Principal>
+            <Dependent Role="FormulaDetalle">
+              <PropertyRef Name="IdFromula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__IdForm__36B12243">
+          <End Type="CursoMVCModel.Formula" Role="Formula" Multiplicity="1" />
+          <End Type="CursoMVCModel.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formula">
+              <PropertyRef Name="IdFormula" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdFormula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FormulaDe__IdIns__33D4B598">
+          <End Type="CursoMVCModel.Insumo" Role="Insumo" Multiplicity="1" />
+          <End Type="CursoMVCModel.FormulaDetalle" Role="FormulaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="IdInsumo" />
+            </Principal>
+            <Dependent Role="FormulaDetalle">
+              <PropertyRef Name="IdInsumo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Insumo__IdProvee__2E1BDC42">
+          <End Type="CursoMVCModel.Proveedor" Role="Proveedor" Multiplicity="0..1" />
+          <End Type="CursoMVCModel.Insumo" Role="Insumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="Insumo">
+              <PropertyRef Name="IdProveedor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -469,19 +667,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Producto__IdProv__2E1BDC42">
-          <End Type="CursoMVCModel.Proveedor" Role="Proveedor" Multiplicity="1" />
-          <End Type="CursoMVCModel.Producto" Role="Producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proveedor">
-              <PropertyRef Name="IdProveedor" />
-            </Principal>
-            <Dependent Role="Producto">
-              <PropertyRef Name="IdProveedor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__RemisionD__IdPro__34C8D9D1">
+        <Association Name="FK__RemisionD__IdPro__3D5E1FD2">
           <End Type="CursoMVCModel.Producto" Role="Producto" Multiplicity="1" />
           <End Type="CursoMVCModel.RemisionDetalle" Role="RemisionDetalle" Multiplicity="*" />
           <ReferentialConstraint>
@@ -493,7 +679,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RemisionD__IdRem__33D4B598">
+        <Association Name="FK__RemisionD__IdRem__3C69FB99">
           <End Type="CursoMVCModel.Remision" Role="Remision" Multiplicity="1" />
           <End Type="CursoMVCModel.RemisionDetalle" Role="RemisionDetalle" Multiplicity="*" />
           <ReferentialConstraint>
@@ -505,7 +691,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -543,6 +729,49 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Formula">
+            <EntityTypeMapping TypeName="CursoMVCModel.Formula">
+              <MappingFragment StoreEntitySet="Formula">
+                <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdFormula" ColumnName="IdFormula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FormulaDetalle">
+            <EntityTypeMapping TypeName="CursoMVCModel.FormulaDetalle">
+              <MappingFragment StoreEntitySet="FormulaDetalle">
+                <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="Borrado" ColumnName="Borrado" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdInsumo" ColumnName="IdInsumo" />
+                <ScalarProperty Name="IdFromula" ColumnName="IdFromula" />
+                <ScalarProperty Name="IdFormulaDetalle" ColumnName="IdFormulaDetalle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Insumo">
+            <EntityTypeMapping TypeName="CursoMVCModel.Insumo">
+              <MappingFragment StoreEntitySet="Insumo">
+                <ScalarProperty Name="FechaModifico" ColumnName="FechaModifico" />
+                <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
+                <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
+                <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Cancelado" ColumnName="Cancelado" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="IdInsumo" ColumnName="IdInsumo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Persona">
             <EntityTypeMapping TypeName="CursoMVCModel.Persona">
               <MappingFragment StoreEntitySet="Persona">
@@ -567,11 +796,10 @@
                 <ScalarProperty Name="IdUsuarioModifico" ColumnName="IdUsuarioModifico" />
                 <ScalarProperty Name="FechaCreo" ColumnName="FechaCreo" />
                 <ScalarProperty Name="IdUsuarioCreo" ColumnName="IdUsuarioCreo" />
-                <ScalarProperty Name="Existencia" ColumnName="Existencia" />
                 <ScalarProperty Name="Precio" ColumnName="Precio" />
                 <ScalarProperty Name="Categoria" ColumnName="Categoria" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="IdFormula" ColumnName="IdFormula" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
               </MappingFragment>
             </EntityTypeMapping>

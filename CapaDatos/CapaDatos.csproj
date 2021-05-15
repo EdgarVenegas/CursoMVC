@@ -73,6 +73,15 @@
     <Compile Include="EntityFramework\Envios.cs">
       <DependentUpon>CursoMVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="EntityFramework\Formula.cs">
+      <DependentUpon>CursoMVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\FormulaDetalle.cs">
+      <DependentUpon>CursoMVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Insumo.cs">
+      <DependentUpon>CursoMVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityFramework\Persona.cs">
       <DependentUpon>CursoMVC.tt</DependentUpon>
     </Compile>
